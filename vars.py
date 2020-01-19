@@ -3,7 +3,7 @@ b=12>3
 c=bool(8)
 print(a,b,c)
 
-a=11 #input('enter the number: ')
+a=11 input('enter the number: ')
 b=int(a)/5
 d=int(a)//5
 
