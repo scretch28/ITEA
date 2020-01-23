@@ -7,14 +7,14 @@ Created on Sun Jan 19 08:06:38 2020
 """
 
 s=''
-while not s.isdigit():
-    s=input('введите полож число: ')
-s=int(s)
-print('дальше будет работать с  x='+s)
+while not s.isalpha(): #s.isalpha() повертає True, якщо там лише букви
+    s=input('введите букви: ')
+#s=int(s)
+print('дальше будет работать с  x=' s)
 
 
 s = ''
-while not s.isdigit():
+while not s.isdigit(): #s.isdigit() повертає True, якщо лише цифри
     s = input('Введите положительное целое число:')
 x = int(s)
 print('Дальше будет работать с x='+s)
@@ -65,7 +65,7 @@ print(str(x) + '! =', fact)
 x = int(input("Введите целое положительное число: "))
 fact = 1
 for i in range(1, x+1):
-# for i in range(x): # Wrong!
+# for i in range(x): # Wrong! - range x починається з 0
     fact *= i
 #     print(str(i) + '! =', fact)
 print('----------------------------------')
@@ -87,6 +87,7 @@ for ch in str(x):
 
 x = int(input('Введите максимальное значение счётчика: '))
 for i in range(x+1):
+    #print(i)
     if i < 2:
         continue
     elif i > 5:
@@ -112,7 +113,6 @@ print(f is fun)
 
 def f():
     print('Simple function.')
-
 f()
 a = f()
 print('Функция f() вернула', a)
@@ -124,14 +124,14 @@ def f1(val):
     # тут Python выполняет va = переданное значение
     print('val =', val)
 
-f1(25)
+f1(35)
 
 
 
 # Пример функции с несколькими параметрами параметром
 
 def vector(x0, y0, x1, y1):
-  x = x1 - x0
+    x = x1 - x0
     y = y1 - y0
     
     print(
@@ -168,16 +168,16 @@ vector(-1, -1, y0=10, x0=10)
 # мы получим разный результат или разные исключения. 
 # Попробуйте это сделать самостоятельно.
 #
-# a = 5
-# del a
+#a = 5
+#del a
 
 def f(x, y):
-    # global a
-    # a = None
+    global a
+    a = None
 #     print('f:', a, x, y)
     a = x * y
-    
-# a = 5
+        
+a = 5
 x = 10
 y = 20
 print('main', a, x, y)

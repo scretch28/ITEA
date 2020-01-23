@@ -14,6 +14,11 @@ print('Hello!', name)
 
 #2.1 запит дати народження:
 day=int(input('Enter the day of birsday: '))
+# перевірка правильності введення 
+while not day.isdigit():
+    day = input('Enter the day of birsday:')
+print(day)
+
 month=int(input('Enter the month of birsday: '))
 year=int(input('Enter the year of birsday: '))
 
