@@ -15,7 +15,7 @@ def get_number(text):
     return num
   
 # функція, що виконує розрахунок суми
-# для float використовується скруглення меньшого числа до 
+# для float використовується скруглення меньшого числа до більшого цілого
 def sum_of_natural_numbers(a,b):
  
     r=0
@@ -36,10 +36,10 @@ def sum_of_natural_numbers(a,b):
    
     return summ
 
-resp=''
+resp='w'
 
-while (resp!='N' and resp!='Н'):
-    resp=''
+while resp not in 'nNНн':
+    
     a=get_number('Введіть перше число a: ')
     b=get_number('Введіть друге число b: ')
       
@@ -47,8 +47,9 @@ while (resp!='N' and resp!='Н'):
     
     print('summ= ',summ)
    
+    resp='w'
     print('Повторити чи вийти з програми?')
-    while(resp!='Y' and resp!='N' and resp!='Д' and resp!='Н'):        
+    while resp not in 'nNНнyYДд':       
         resp=input('Для повтору введіть одну з букв Д/д/Y/y, для виходу з програми Н/н/N/n: ')
         resp=resp.upper()
 
