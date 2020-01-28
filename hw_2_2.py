@@ -1,59 +1,83 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 21 14:44:03 2020
+Created on Thu Jan 23 11:12:37 2020
 
 @author: nia
 """
-import math
 
-# функція, що виконує запит числа у користувача
-def get_number(text):
-    num=-1
-    while(num<0):
-        num=float(input(text))        
-    return num
+#filename: hw_2_2.py
+#Пользователь вводит два числа a и b. Тип чисел может быть как int(),
+# так и float()
+#Выведите сумму всех натуральных чисел от меньшего до большего (включительно).
+#Рекомендую строго соблюдать определние "натуральное число"
+#Требования к реализации¶
+#Функция sum_of_natural_numbers(a, b)¶
+#Функция sum_of_natural_numbers должна принимать два параметра с числовыми значениями.
+#Значения параметров могут быть:
+#равны между собой
+#первый больше второго
+#первый меньше второго
+#Функция должна вернуть натуральное число (в Python это можно выразить типом int), которое является суммой натуральных числел, находящихся в заданном параметрами диапазоне (включительно).
+#Простой пример¶
+#sum_of_natural_numbers(3, 7) должна вернуть 25
+#Программа¶
+#Запрашивает у пользователя два числа.
+#Вызывает функцию.
+#Печатает на экране вразумительное сообщение и результат функции.
+#Запрашивает у пользователя вариант продолжения:
+# повторить заново (y/Y/Д/д) или выйти (n/N/Н/н) из программы.
+
+
+def sum_of_natural_numbers (a, b):
   
-    
-
-# функція, що виконує розрахунок суми
-# для float використовується скруглення меньшого числа до більшого цілого
-def sum_of_natural_numbers(a,b):
- 
     r=0
-    if a<b:        
-        a=math.ceil(a)
-        b=int(b)
-        r=range(a,b+1)
-    elif a>b:
-        b=math.ceil(b)
-        a=int(a)
-        r=range(b,a+1)
+    if a>b:
+        r=range(b, a+1)
+        list(range(b, a+1))
+    elif a<b:
+        r=range(a, b+1)
+        list(range(a, b+1))    
     else:
-       return int(a)
-   
-    summ=0   
+       return a
+    
+
+    gather=0
     for i in r:
-        summ+=i
-   
-    return summ
+        gather+=i
+    return gather
+        
+p='w'
+#while p!='n' and p!='N' and p!='Н' and p!='н':
+while p not in 'nNНн':
 
-resp='w'
+    a=float(input('Enter the number a: '))
+    b=float(input('Enter the number b: '))
 
-while resp not in 'nNНн':
+    if a<0:
+        a=0
+    if b<0:
+        b=0
+        
+    if int(a)==int(b) and a!=b:
+        # ціла частина однакова, але числа різні, тобто в діапазоні між ними немає жодного натурального числа
+        a=0
+        b=0
+    elif a==b and a!=int(a):
+        a=0
+        b=0
+    elif a<b and a!=0 and a%int(a)!=0:
+        a=a+1
     
-    a=get_number('Введіть перше число a: ')
-    b=get_number('Введіть друге число b: ')
-      
-    summ=sum_of_natural_numbers(a,b)
+    elif b<a and b!=0 and b%int(b)!=0:
+        b=b+1
     
+        
+    summ=sum_of_natural_numbers(int(a), int(b))
+        
     print('summ= ',summ)
    
-    resp='w'
-    print('Повторити чи вийти з програми?')
-    while resp not in 'nNНнyYДд':       
-        resp=input('Для повтору введіть одну з букв Д/д/Y/y, для виходу з програми Н/н/N/n: ')
-        resp=resp.upper()
-
-
-
+    p='w'
+    #while p!='n' and p!='N' and p!='Н' and p!='н' and p!='y' and p!='Y' and p!='Д' and p!='д':       
+    while p not in 'nNНнyYДд':      
+        p=input('Для продовження введіть - y/Y/Д/д, для виходу - n/N/Н/н): ')
