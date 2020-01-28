@@ -7,7 +7,8 @@ Created on Thu Jan 23 11:12:37 2020
 """
 
 #filename: hw_2_2.py
-#Пользователь вводит два числа a и b. Тип чисел может быть как int(), так и float()
+#Пользователь вводит два числа a и b. Тип чисел может быть как int(),
+# так и float()
 #Выведите сумму всех натуральных чисел от меньшего до большего (включительно).
 #Рекомендую строго соблюдать определние "натуральное число"
 #Требования к реализации¶
@@ -38,7 +39,7 @@ def sum_of_natural_numbers (a, b):
         r=range(a, b+1)
         list(range(a, b+1))    
     else:
-       return(a)
+       return a
     
 
     gather=0
@@ -50,22 +51,23 @@ p='w'
 #while p!='n' and p!='N' and p!='Н' and p!='н':
 while p not in 'nNНн':
 
-    a=''
-    while not a.isdigit ():
-        a=input('Enter the number a: ')
-    
-    print('a= ', a)
+    a=float(input('Enter the number a: '))
+    b=float(input('Enter the number b: '))
+#    a=int(a)
+#    b=int(b)
+    if a<0:
+        a=0
+    if a<b:
+        a=a+1
+    if b<0:
+        b=0
+    if b<a:
+        b=b+1
+    else:
+
+    return a, b
         
-    b=''
-    while not b.isdigit():
-        b=input('Enter the number b: ')
     
-    print('b= ', b)
-    
-    a=int(a)
-    a=(abs(a))
-    b=int(b)
-    b=(abs(b))
         
     summ=sum_of_natural_numbers(a,b)
         

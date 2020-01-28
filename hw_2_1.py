@@ -18,19 +18,13 @@ Created on Mon Jan 20 11:29:21 2020
 
 # введення змінних
 
-a=''
-while not a.isdigit():
-    a=input('Enter the variable a :')
-a=(int(a))
-b=''
-while not b.isdigit():
-    b=input('Enter the variable b :')
-b=(int(b))
-c=''
-while not c.isdigit():
-    c=input('Enter the variable c :')
-c=(int(c))
-print(a,b,c)
+a=input('Enter the variable a :')
+a=(float(a))
+b=input('Enter the variable b :')
+b=(float(b))
+c=input('Enter the variable c :')
+c=(float(c))
+print('a= %s,b= %s, c= %s' % (a,b,c ))
 
 # знаходимо квадратне рівняння
 #a*x^2+b*x+c=0
@@ -45,17 +39,17 @@ x1=0
 x2=0
 
 if d>0:
-    x1=(-b+d**(1/2))/2*a 
-    x2=(-b-d**(1/2))/2*a
+    x1=(-b+d**(1/2))/(2*a) 
+    x2=(-b-d**(1/2))/(2*a)
     print ('Pівняння має два корення x1= %s, x2= %s' % (x1, x2))
 elif d<0:
-    x1=(-b+d**(1/2))/2*a 
-    x2=(-b-d**(1/2))/2*a
+    x1=(-b+d**(1/2))/(2*a) 
+    x2=(-b-d**(1/2))/(2*a)
 
     print ('''Pівняння має два комплексних кореня x1= %s, x2= %s'.
        Рівняння не має дійсних коренів.''' % (x1, x2))
 else:
-    x1=x2=(-b)/2*a
+    x1=x2=(-b)/(2*a)
     print('Рівняння має один корінь х= ', x2)
 
 

@@ -14,6 +14,8 @@ def get_number(text):
         num=float(input(text))        
     return num
   
+    
+
 # функція, що виконує розрахунок суми
 # для float використовується скруглення меньшого числа до більшого цілого
 def sum_of_natural_numbers(a,b):

@@ -47,7 +47,11 @@ c = list(a)
 print(c)
 d = list(range(3, 10))
 print(d)
+d=a
+print(d)
+d[0]=99
 c is a, c == a
+d is a, d == a
 
 ['q', 'w', 'e', 'r', 't', 'y']
 ['qwerty']
@@ -83,7 +87,7 @@ a = [
     [1,2,3],
     [4,5,6],
 ]
-a[0][0]
+a[1][1]
 
 1
 
@@ -96,15 +100,17 @@ print(a)
 print("От позиции - до конца:")
 print("a[2:] = ", a[2:])
 print("a[-3:] = ", a[-3:])
-aa = a[2:]
+aa = a[2:]# срез створює копію, що дає можливість змінити копію масива,
+            # основний залишається незмінним, id - різні
+aa[0]=999
 print(type(aa), id(a), id(aa))
 print(aa)
 
 [-0-, -1-, -2-, -3-, -4-, -5-, -6-, -7-, -8-, -9-]
 ['q', 'w', 'e', 'r', 't', 'y']
 От позиции - до конца:
-a[2:] =  ['e', 'r', 't', 'y']
-a[-3:] =  ['r', 't', 'y']
+a[2:] =  ['e', 'r', 't', 'y']# від позиції і до кінця
+a[-3:] =  ['r', 't', 'y']# три останні символи
 <class 'list'> 140349806226320 140349806626608
 ['e', 'r', 't', 'y']
 
@@ -121,7 +127,8 @@ id(a), id(aa), id(b), a == aa, b == a, b == aa
 print('[' + ', '.join([f"-{i}-" for i in range(10)]) + ']')
 print(a)
 print("От позиции - до позиции:")
-print("a[1:3] = ", a[1:3])
+print("a[1:3] = ", a[1:3])# виводиться елемент між позиціями, 
+#                            останній не включається 
 print("a[-3:-1] = ", a[-3:-1])
 
 
@@ -134,12 +141,16 @@ a[-3:-1] =  ['q']
 print('[' + ', '.join([f"-{i}-" for i in range(10)]) + ']')
 print(a)
 print("С шагом:")
-print("a[1::1] = ", a[1::1])
-print("a[1::2] = ", a[1::2])
-print("a[::3] = ", a[::3])
+print("a[1::1] = ", a[1::1])#с 1-го елемента з шагом 1
+a.append(4)
+a.append(6)
+a.append(5)
+print(a)
+print("a[1::2] = ", a[1::2])#вибирає елементи 1-й з шагом 2
+print("a[::3] = ", a[::3])#вибирає кожен 3-й елемент
 print("a[-1::-2] = ", a[-1::-2])
-print("a[-1::-1] = ", a[-1::-1])
-print(a[::-1])
+print("a[-1::-1] = ", a[-1::-1])#друкує навпаки
+print(a[::-1])#від останнього елементу і до кінця
 
 
 [-0-, -1-, -2-, -3-, -4-, -5-, -6-, -7-, -8-, -9-]
@@ -170,7 +181,7 @@ print(a, b, a is b, a==b)
 
 
 b.extend(list('rt'))  # list('rt') == ['r', 't']
-print(a, b, a is b, a==b)
+print(a, b, a is b, a==b)#об*єднання списків
 
 
 ['q', 'w', ['e'], 'r', 't'] ['q', 'w', ['e'], 'r', 't'] True True
@@ -179,7 +190,7 @@ print(a, b, a is b, a==b)
 a = list('qw')
 b = a
 print(a, b, id(a), id(b), a is b, a==b)
-a = a + ['y',]
+a = a + ['y','2']
 print(a, b, id(a), id(b), a is b, a==b)
 
 
@@ -302,7 +313,7 @@ Help on method_descriptor:
 count(self, value, /)
     Return number of occurrences of value.
 
-list('abracadabra').count('a')
+list('abracadabra').count('a')#рахує кількість зазначених символів
 
 5
 
@@ -325,7 +336,7 @@ a = list('zaqwsx')
 print(a)
 l = ['1', '2']
 a.insert(3, l)
-print(a, a[3])
+print(a, a[3])#розширити список списком на 3-му ел-ті поставити 1,2
 print(id(a[3]), id(l))
 
 
@@ -338,17 +349,7 @@ print(id(a[3]), id(l))
 140349806311936 140349806311936
 
 
-
-
-In [86]:
-
-
-
 help(list.pop)
-
-
-
-
 
 
 Help on method_descriptor:
@@ -358,38 +359,16 @@ pop(self, index=-1, /)
     
     Raises IndexError if list is empty or index is out of range.
 
-
-
-
-
-In [89]:
-
-
-
 print(a)
 x = a.pop(-2)
 print('a=' + repr(a), 'x=' + repr(x))
-
-
-
-
 
 
 ['z', 'a', 'q', ['1', '2'], 's']
 a=['z', 'a', 'q', 's'] x=['1', '2']
 
 
-
-
-In [90]:
-
-
-
 help(list.index)
-
-
-
-
 
 
 Help on method_descriptor:
@@ -400,13 +379,6 @@ index(self, value, start=0, stop=9223372036854775807, /)
     Raises ValueError if the value is not present.
 
 
-
-
-
-In [91]:
-
-
-
 abracadabra = list('abracadabra')
 p1 = abracadabra.index('a')
 p2 = abracadabra.index('a', p1)
@@ -414,24 +386,10 @@ p3 = abracadabra.index('a', p1+1)
 print(p1, p2, p3)
 
 
-
-
-
-
 0 0 3
 
 
-
-
-In [92]:
-
-
-
 help(list.remove)
-
-
-
-
 
 
 Help on method_descriptor:
@@ -440,12 +398,6 @@ remove(self, value, /)
     Remove first occurrence of value.
     
     Raises ValueError if the value is not present.
-
-
-
-
-
-In [98]:
 
 
 
@@ -610,16 +562,8 @@ min(...)
 
 'e'
 
-
-In [116]:
-
-
-
 a = [1, 2.0, 'a', True]
 min(a)
-
-
-
 
 
 
@@ -630,10 +574,6 @@ TypeError                                 Traceback (most recent call last)
 ----> 2 min(a)
 
 TypeError: '<' not supported between instances of 'str' and 'int'
-
-
-In [117]:
-
 
 
 help(max)
@@ -656,15 +596,7 @@ max(...)
     With two or more arguments, return the largest argument.
 
 
-
-
-Out[117]:
-
 'y'
-
-
-In [118]:
-
 
 
 help(sum)
@@ -685,21 +617,11 @@ sum(iterable, start=0, /)
     reject non-numeric types.
 
 
-
-
-Out[118]:
-
 10
-
-
-In [121]:
 
 
 
 help(sorted)
-
-
-
 
 
 
@@ -713,30 +635,14 @@ sorted(iterable, /, *, key=None, reverse=False)
 
 
 
-
-
-In [120]:
-
-
-
 a = list('qwerty')
 b = sorted(a)
 print(id(a), a)
 print(id(b), b)
 
 
-
-
-
-
 140349807112096 ['q', 'w', 'e', 'r', 't', 'y']
 140349806359488 ['e', 'q', 'r', 't', 'w', 'y']
-
-
-
-
-In [123]:
-
 
 
 a = list(range(10)) + list(range(-9, 0))
@@ -745,17 +651,8 @@ b = sorted(a, key=lambda x: abs(x))
 print(b)
 
 
-
-
-
-
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -9, -8, -7, -6, -5, -4, -3, -2, -1]
 [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9]
-
-
-
-
-In [124]:
 
 
 
@@ -808,11 +705,6 @@ print(b)
 
 Распаковка и упаковка последовательностей¶
 
-
-In [135]:
-
-
-
 a = [1, 2, 3]
 a1, a2, a3 = a
 print(a1, a2, a3)
@@ -830,17 +722,9 @@ print(id(a[0]), id(a[1]), id(a[2]))
 
 
 
-
-In [136]:
-
-
-
 a = [1, 2, 3, 4, 5]
 a1, a2, a3 = a
 print(a1, a2, a3)
-
-
-
 
 
 
@@ -854,35 +738,17 @@ ValueError                                Traceback (most recent call last)
 ValueError: too many values to unpack (expected 3)
 
 
-In [137]:
-
-
-
 a = [1, 2, 3, 4, 5]
 a1, a2, a3, *extra = a
 print(a1, a2, a3, extra)
 
 
-
-
-
-
 1 2 3 [4, 5]
-
-
-
-
-In [138]:
-
 
 
 a = [1, 2, 3, 4, 5]
 a1, a2, *extra, a3 = a
 print(a1, a2, a3, extra)
-
-
-
-
 
 
 1 2 5 [3, 4]
@@ -900,16 +766,7 @@ print(a1, a2, a3, extra)
 
 
 
-
-
-
 3 4 5 [1, 2]
-
-
-
-
-In [139]:
-
 
 
 a = [1, 2, 3, 4, 5]
@@ -917,16 +774,7 @@ a1, a2, *_, a3 = a
 print(a1, a2, a3)
 
 
-
-
-
-
 1 2 5
-
-
-
-
-In [141]:
 
 
 
@@ -936,16 +784,7 @@ c = a + b
 print(a, b, c)
 
 
-
-
-
-
 [1, 2, 3] [4, 5, 6] [1, 2, 3, 4, 5, 6]
-
-
-
-
-In [142]:
 
 
 
@@ -956,15 +795,7 @@ print(a, b, c)
 
 
 
-
-
-
 [1, 2, 3] [4, 5, 6] [1, 2, 3, 4, 5, 6]
-
-
-
-
-In [143]:
 
 
 
@@ -974,66 +805,24 @@ c = [a, b]
 print(a, b, c)
 
 
-
-
-
-
 [1, 2, 3] [4, 5, 6] [[1, 2, 3], [4, 5, 6]]
-
-
-
 
 
 Логические операции¶
 
-
-In [126]:
-
-
-
 'r' in list('abracadabra')
 
 
-
-
-
-Out[126]:
-
 True
-
-
-In [128]:
-
-
 
 [1,2,3] < [1, 2, 1, 2]
 
 
 
-
-
-Out[128]:
-
 False
 
 
-In [132]:
-
-
-
 [1,2,3] < [2, 2, [1, 2]]
-
-
-
-
-
-Out[132]:
-
-True
-
-
-In [144]:
-
 
 
 [1,2,3] < [[2, 1]]
