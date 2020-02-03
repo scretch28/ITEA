@@ -681,7 +681,7 @@ In [125]:
 
 
 key_func_lambda = lambda x: abs(x)
-
+print(key_func_lambda)
 a = list(range(10)) + list(range(-9, 0))
 print(a)
 b = sorted(a, key=key_func_lambda)
