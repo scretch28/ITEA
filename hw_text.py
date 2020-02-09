@@ -106,7 +106,15 @@ In the 2012 Harvard Business Review article "Data Scientist: The Sexiest Job of 
 In 2013, the IEEE Task Force on Data Science and Advanced Analytics[27] was launched. In 2013, the first "European Conference on Data Analysis (ECDA)" was organised in Luxembourg, establishing the European Association for Data Science (EuADS). The first international conference: IEEE International Conference on Data Science and Advanced Analytics was launched in 2014.[28] In 2014, General Assembly launched student-paid bootcamp and The Data Incubator launched a competitive free data science fellowship.[29] In 2014, the American Statistical Association section on Statistical Learning and Data Mining renamed its journal to "Statistical Analysis and Data Mining: The ASA Data Science Journal" and in 2016 changed its section name to "Statistical Learning and Data Science".[30] In 2015, the International Journal on Data Science and Analytics[31] was launched by Springer to publish original work on data science and big data analytics. In September 2015 the Gesellschaft für Klassifikation (GfKl) added to the name of the Society "Data Science Society" at the third ECDA conference at the University of Essex, Colchester, UK.
 """
 
-
+#1. Найти количество букв в тексте¶
+#в разрезе:
+#всего
+#верхний регистр
+#нижний регистр
+#Результат записать в словарь с ключами:
+#"total"
+#"upper"
+#"lower"
 
 #letters=[l for l in TEXT if l.isalpha()]
 letters=list()
@@ -155,6 +163,82 @@ sort_l=sorted(list_k, key=lambda x:x[1],reverse = True )
 print(sort_l)
 
 #4. Найти общее количество слов в тексте; результат записать как int.¶
+from string import whitespace, punctuation
+symbols_trans = str.maketrans(punctuation, ' '*len(punctuation))
+
+
+words=TEXT.translate(symbols_trans).split()
+#words=TEXT.replace('.',' ').replace(',',' ').replace(':',' ').replace(';',' ').split()
+words_count=len(words)
+
+#5 Найти количество чисел в тексте, результат записать как int;¶
+
+numbers=list(filter(lambda x: x.isdigit(),words))
+su_m=len(numbers)
+print(su_m)
+
+#6. Создать dict, в котором Ключи - длина слова, а Значения - количество слов с такой длиной;¶
+dict_words=dict()
+for x in words:
+    l=len(x)
+    if dict_words.get(l)==None:
+        dict_words[l]=1
+    else:
+        dict_words[l]+=1
+print(dict_words)
+        
+#7. Найти долю предложений, в коотрых встречается словосочетание "Data Science"; результат записать как число float < 1.¶
+state=TEXT.split('.')
+state_ds=list(filter(lambda x: "Data Science" in x, state))
+s=len(state)
+sd=len(state_ds)
+part=sd/s
+print(part)
+
+
+#8. Найти колчичество специалных символов в тектсе, результат записать в dict, в котором¶
+#Ключи - специальные символы, значения - их количество
+simbol=dict()
+for x in TEXT:
+    if x in punctuation:
+        if simbol.get(x)==None:
+            simbol[x]=1
+        else: 
+            simbol[x]+=1
+print(simbol)
+
+
+#9. Создать список букв в верхнем регистре, отсортированных по их количеству¶
+
+
+
+#10. Найти буквы, которые встречаются чаще и реже всех остальных. Результат записать как tuple.¶
+#
+#
+#
+#11. Найти все числа и записать их в list, отсортировав их от большего к меньшему.¶
+#
+#
+#12. Найти минимальное и максимальное число; результат записать как tuple(меньшее, большее)¶
+#
+#
+#13. Найти абзац, в котором "Data Science" встречается наиболее часто; результат - строка с текстом этого абзаца.¶
+#
+#
+#14. Создать dict, в котором¶
+#Ключи - это слово
+#Значения - количество раз упоминания его в тексте
+#
+#
+#
+#15. Найти слова, которые встречаются чаще и реже других.¶
+#Результат записать как
+#tuple(
+#    tuple(самое_редкое_слово, количество), 
+#    tuple(самое_популярное_слово, количество)
+#)
+
+
 
 
 
@@ -242,3 +326,5 @@ for symb in symbols_set:
    
 # 8. symbols count dictionary
 print(symbols_dic)
+
+

@@ -24,7 +24,7 @@ Created on Sat Jan 25 00:38:26 2020
 a = list()
 print(type(a), str(a), repr(a))
 
-<class 'list'> [] []
+#<class 'list'> [] []
 
 # Литерал
 a = []
@@ -46,6 +46,7 @@ print(b)
 c = list(a)
 print(c)
 d = list(range(3, 10))
+
 print(d)
 d=a
 print(d)
@@ -182,6 +183,10 @@ print(a, b, a is b, a==b)
 
 b.extend(list('rt'))  # list('rt') == ['r', 't']
 print(a, b, a is b, a==b)#об*єднання списків
+
+
+
+
 
 
 ['q', 'w', ['e'], 'r', 't'] ['q', 'w', ['e'], 'r', 't'] True True
