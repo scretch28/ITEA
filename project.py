@@ -1,4 +1,5 @@
 
+
 '''
 Розробити проект "Адресна книга"
 Реквізити контакту:
@@ -38,10 +39,7 @@ class Contact:
         self.e_mail=list()
         self.phones=list()
         self.messengers=dict()
-        
-#        global reg_id
-#        reg_id += 1
-#        self.id = reg_id
+        self.id = 0
     
     def __str__(self):
         return self.name        
@@ -50,8 +48,8 @@ class Contact:
 
 class Address_book:
     def __init__(self):
-#        self.contacts=dict()
-        self.contacts=list()
+        self.contacts=dict()
+#        self.contacts=list()
         
     def create_contact(self):
         name=input('Enter the name: ')
@@ -87,27 +85,62 @@ class Address_book:
     def append_contact(self, contact):
         if not isinstance(contact, Contact):
             raise TypeError(f'Ожидается тип `Contact`, а получен {type(contact)}')
-        self.contacts.append(contact) 
+#        self.contacts.append(contact)
+        global reg_id
+        
+        reg_id += 1
+        contact.id=reg_id
+        self.contacts[contact.id]=contact
+        
         
         
     def __str__(self):
-          l_max_name=len(max(self.contacts,key=lambda x:len(x.name)).name)
-          l_max_surname=len(max(self.contacts,key=lambda x:len(x.surname)).surname)
-          l_max_midle_name=len(max(self.contacts,key=lambda x:len(x.midle_name)).midle_name)
+          l_max_name=len(max(self.contacts.values(),key=lambda x:len(x.name)).name)
+          l_max_surname=len(max(self.contacts.values(),key=lambda x:len(x.surname)).surname)
+          l_max_midle_name=len(max(self.contacts.values(),key=lambda x:len(x.midle_name)).midle_name)
+          l_max_phone=15
+          l_max_e_mail=20
+          
+                  
+          
           
           result=''
           
-          for c in self.contacts:
+          for c in self.contacts.values():
     
               l_name=l_max_name -len(c.name)
               l_surname=l_max_surname -len(c.surname)
               l_midle_name=l_max_midle_name -len(c.midle_name)
-              result+='| %s %s | %s %s | %s %s |\n'%(c.name, ' '*l_name, c.surname, ' '*l_surname, c.midle_name, ' '*l_midle_name,)
+              l_phone=l_max_phone
+              phone=''
+              if len(c.phones)>0:
+                  phone=c.phones[0]
+                  l_phone=l_max_phone-len(phone)
+              e_mail=''
+              if len(c.e_mail)>0:
+                  e_mail=c.e_mail[0]
+                  l_e_mail=l_max_e_mail-len(e_mail)
+              
+           
+                  
+                  
+              
+              result+='| %s | %s %s | %s %s | %s %s | %s %s | %s %s |\n'%(c.id, c.name, ' '*l_name, c.surname, ' '*l_surname, c.midle_name, ' '*l_midle_name, phone, ' '*l_phone, e_mail, ' '*l_e_mail)
         
           return result
+      
+#      def update_contact(self, id):
+#          contact=self.contacts[id]
+#          print('Дані контакту будуть змінені')
+           
+          
+
 
 
 reg_id=0
+
+
+
 
 
 address_book=Address_book()

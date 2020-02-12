@@ -207,14 +207,47 @@ for x in TEXT:
             simbol[x]+=1
 print(simbol)
 
-
 #9. Создать список букв в верхнем регистре, отсортированных по их количеству¶
+letters=list()
+for l in TEXT:
+    if l.isalpha():
+        letters.append(l)
 
+print(letters)
 
+ll_up=list()
+#ll_up=list(filter(lambda x: x.isupper(),letters))
+#print(ll_up)
+for x in letters:
+    if x.isupper():
+        ll_up.append(x)
+print(ll_up)
 
-#10. Найти буквы, которые встречаются чаще и реже всех остальных. Результат записать как tuple.¶
-#
-#
+print(set(ll_up))
+ll_up_dict=dict()
+for x in set(ll_up):
+    ll_up_dict[x]=ll_up.count(x)
+sort_ll_up=sorted(ll_up_dict.items(), key=lambda x:x[1])
+print(sort_ll_up)
+print(ll_up_dict.items())
+z=list(map(lambda x:x[0], sort_ll_up)) 
+print(z)   
+
+#10. Найти буквы, которые встречаются чаще и реже всех остальных. 
+#Результат записать как tuple.¶
+('max','k')
+zzz=sort_l[0][0]
+print(zzz)
+xxx=sort_l[-1:-4][0]
+print(xxx)
+max1=max(sort_l,key=lambda x:x[1])[1]
+min1=min(sort_l,key=lambda x:x[1])[1]
+
+l_max=list(filter(lambda x:x[1]==max1,sort_l))
+l_min=list(filter(lambda x:x[1]==min1,sort_l))
+
+t=(list(map(lambda x:x[0],l_max)),list(map(lambda x:x[0], l_min)))
+print (t)
 #
 #11. Найти все числа и записать их в list, отсортировав их от большего к меньшему.¶
 #
