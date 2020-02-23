@@ -27,7 +27,9 @@
     3. Під час виходу запитувати про необхідність збереження переліку контактів у файл на диск
     4. Вивести перелік контактів у текстовий файл(звіт за усіма реквізитами)
 '''    
- 
+
+
+import pickle 
 class Contact:
 
     # def __init__(self, price=0.0, color='black', model_name='Ford', vin=''):
@@ -42,7 +44,9 @@ class Contact:
         self.id = 0
     
     def __str__(self):
-        return self.name        
+#        result='\n'+'name: ' % name, 'surname: ' % surname, 
+        result=f"{self.name} {self.surname} {self.midle_name}:\n\tадреса: {self.address} \n\te_mail: {str.join(', ', self.e_mail)} \n\tтелефони: {str.join(', ', self.phones)} \n\tmessengers: {self.messengers}"
+        return result        
             
         
 
@@ -50,15 +54,31 @@ class Address_book:
     def __init__(self):
         self.contacts=dict()
 #        self.contacts=list()
+        self.reg_id=0
+    
+    
+    
+    
         
     def create_contact(self):
         name=input('Enter the name: ')
+        while name=='':
+            name=input('Enter the name: ')
+    
+        
         surname= input('Enter the surname: ')
+        while surname=='':
+            surname= input('Enter the surname: ')
+        
         midle_name=input('Enter the midle_name: ')
-           
+        while name=='':   
+            midle_name=input('Enter the midle_name: ')
+            
         contact=Contact(surname, name, midle_name)
         
         address=input('Enter the address: ')
+        contact.address=address 
+        
         e_mail=input('Enter the e_mail: ')
         while e_mail!='':
             contact.e_mail.append(e_mail)
@@ -76,7 +96,7 @@ class Address_book:
             messenger=input('Enter the messenger number or empty str: ')
         
         
-        contact.address=address       
+             
         
 #        self.contacts[contact.id]=contact
         
@@ -86,10 +106,10 @@ class Address_book:
         if not isinstance(contact, Contact):
             raise TypeError(f'Ожидается тип `Contact`, а получен {type(contact)}')
 #        self.contacts.append(contact)
-        global reg_id
+#        global reg_id
         
-        reg_id += 1
-        contact.id=reg_id
+        self.reg_id += 1
+        contact.id=self.reg_id
         self.contacts[contact.id]=contact
         
         
@@ -129,12 +149,85 @@ class Address_book:
         
           return result
       
-#      def update_contact(self, id):
-#          contact=self.contacts[id]
-#          print('Дані контакту будуть змінені')
-           
+    def update_contact (self, id):
+          contact=self.contacts[id]
+          print('Дані контакту будуть змінені')
+          
+          value=contact.name
+          print('Поточні данні контакту: name %s ' % value )
+          value=input('У разі необхідності введіть нове значення name, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value!="":
+              contact.name=value
           
 
+          value=contact.surname
+          print('Поточні данні контакту: surname %s ' %  value )
+          value=input('У разі необхідності введіть нове значення surname, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value!="":
+              contact.surname=value
+              
+              
+          value=contact.midle_name
+          print('Поточні данні контакту: midle_name %s ' %  value )
+          value=input('У разі необхідності введіть нове значення midle_name, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value!="":
+              contact.midle_name=value
+
+
+          value=contact.address
+          print('Поточні данні контакту: address %s ' %  value )
+          value=input('У разі необхідності введіть нове значення address, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value!="":
+              contact.address=value  
+              
+          value=str.join(', ', contact.e_mail)
+          print('Поточні данні контакту: e_mail %s ' %  value )
+          value=input('У разі необхідності введіть нове значення e_mail, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value !='':
+              contact.e_mail.clear()
+              while value!='':
+                contact.e_mail.append(value)
+                value=input('Enter the e_mail or empty str: ')
+         
+         
+          value=str.join(', ', contact.phones)
+          print('Поточні данні контакту: phone_number %s ' %  value )
+          value=input('У разі необхідності введіть нове значення phone_number, або підтвердіть їх правельність - натисніть \'Enter\': ')
+          if value !='':
+              contact.phones.clear()
+              while value!='':
+                contact.phones.append(value)
+                value=input('Enter the phone_number or empty str: ')        
+            
+            
+          print('Поточні данні контакту: messenger %s ' % contact.messengers ) 
+          messenger=input('Enter the messenger: ')
+          while messenger!='':
+               account=input('Enter the account: ')
+               contact.messengers[messenger]=account     
+               messenger=input('Enter the messenger number or empty str: ')
+
+
+    def del_contact(self, id):
+        contact=self.contacts[id]
+        print('Дані контакту будуть видалені: ', contact)
+        del self.contacts[id]
+       
+    def save_to_file(self, file_name="adress_book"):
+       
+        filehandler = open(file_name, 'bw') 
+        pickle.dump(self, filehandler)
+        
+        
+    def load_from_file (self, file_name="adress_book"):
+        filehandler = open(file_name, 'br') 
+        saved_book = pickle.load(filehandler)
+        self.reg_id=saved_book.reg_id
+        self.contacts=saved_book.contacts
+
+    def search_by_name (self, name):
+        result_search=list(filter(lambda x: name in x.name, self.contacts.values()))
+        return result_search
 
 
 reg_id=0
@@ -145,19 +238,49 @@ reg_id=0
 
 address_book=Address_book()
 c1=address_book.create_contact()
-c2=address_book.create_contact()
-c3=address_book.create_contact()
+#c2=address_book.create_contact()
+#c3=address_book.create_contact()
+#
+#address_book.append_contact(c1)
+#address_book.append_contact(c2)
+#address_book.append_contact(c3)
+##print(c)
+#print(address_book)
+#address_book.save_to_file()
 
-address_book.append_contact(c1)
-address_book.append_contact(c2)
-address_book.append_contact(c3)
-#print(c)
+address_book=Address_book()
+address_book.load_from_file()
 print(address_book)
+
+#address_book.del_contact(2)
+#print(address_book)
+
+z=address_book.search_by_name('bkv')
+print(z)
+print (c1)
+
+
+
+
+
+
+
+
+
+#address_book.update_contact()
+#address_book.update_contact(2)
+
     
     
-    
-    
-#    
+
+#a={1:'A', 2:'B', 3:'C'}
+#a.update({2:'T'}) 
+#print(a) 
+#c=a.get(10)
+#print (c)
+#b=a[10]
+#print(b)
+###    
 #    
 #    print
 #    

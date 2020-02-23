@@ -30,7 +30,8 @@ reg_id = 0
 
 
 car1 = Car()
-#print(car1)
+print(car1)
+
 car1.price = 10
 car1.color = 'white'
 
