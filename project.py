@@ -45,7 +45,7 @@ class Contact:
     
     def __str__(self):
 #        result='\n'+'name: ' % name, 'surname: ' % surname, 
-        result=f"{self.name} {self.surname} {self.midle_name}:\n\tадреса: {self.address} \n\te_mail: {str.join(', ', self.e_mail)} \n\tтелефони: {str.join(', ', self.phones)} \n\tmessengers: {self.messengers}"
+        result=f"id={self.id} {self.name} {self.surname} {self.midle_name}:\n\tадреса: {self.address} \n\te_mail: {str.join(', ', self.e_mail)} \n\tтелефони: {str.join(', ', self.phones)} \n\tmessengers: {self.messengers}"
         return result        
             
         
@@ -224,21 +224,30 @@ class Address_book:
         saved_book = pickle.load(filehandler)
         self.reg_id=saved_book.reg_id
         self.contacts=saved_book.contacts
+        
+    def get_contact_by_id (self, id):
+        return self.contacts[id]
+    
+    def report_to_file (self):
+         filehandler = open('report.txt', 'a') 
+         for c in self.contacts.values():
+             print(c, file=filehandler)
+         filehandler.close()
 
     def search_by_name (self, name):
         result_search=list(filter(lambda x: name in x.name, self.contacts.values()))
         return result_search
 
 
-reg_id=0
+#reg_id=0
 
 
 
 
 
-address_book=Address_book()
-c1=address_book.create_contact()
-#c2=address_book.create_contact()
+#address_book=Address_book()
+#c1=address_book.create_contact()
+##c2=address_book.create_contact()
 #c3=address_book.create_contact()
 #
 #address_book.append_contact(c1)
@@ -248,16 +257,94 @@ c1=address_book.create_contact()
 #print(address_book)
 #address_book.save_to_file()
 
-address_book=Address_book()
-address_book.load_from_file()
-print(address_book)
-
-#address_book.del_contact(2)
+#address_book=Address_book()
+#address_book.load_from_file()
 #print(address_book)
-
-z=address_book.search_by_name('bkv')
-print(z)
-print (c1)
+#
+##address_book.del_contact(2)
+##print(address_book)
+#
+#z=address_book.search_by_name('bkv')
+#print(z)
+#print (c1)
+address_book=Address_book()
+comand=''
+while comand!='e':
+    print("Hello, can I help you? - yours Address book :Р)")
+    print("Whould you choose your action?")
+    print("Press \"l\" to load  contacts from file")
+    print("Press \"t\" to show  contacts table")
+    print("Press \"c\" to create new contact")
+    print("Press \"u\" to update  contact")
+    print("Press \"d\" to delete contact")
+    print("Press \"v\" to view  contact info")
+    print("Press \"r\" to create text report")
+    print("Press \"f\" to find a contact")
+    print("Press \"s\" to save contacts to file")
+    print("Press \"e\" to exit")
+    command=input('Make your choise: ')
+    
+  
+    
+    if command=='l':
+        address_book.load_from_file()
+    elif command=='t':
+        print(address_book)
+    elif command=='c':
+        c=address_book.create_contact()
+        address_book.append_contact(c)
+    elif command=='u':
+        contact_id=''
+        while not contact_id.isdigit():
+            contact_id=input("Enter contact id or \"0\" for return  to previous menu: " )
+        contact_id=int(contact_id)
+        if contact_id != 0:
+            try:
+                address_book.update_contact(contact_id)
+            except KeyError:
+                print ('Contact with this id didn\'t find')
+    elif command=='d':
+        contact_id=''
+        while not contact_id.isdigit():
+            contact_id=input("Enter contact id or \"0\" for return  to previous menu: " )
+        contact_id=int(contact_id)
+        if contact_id != 0:
+            try:
+                address_book.del_contact(contact_id)
+            except KeyError:
+                print ('Contact with this id didn\'t find')
+    elif command=='v':
+        contact_id=''
+        while not contact_id.isdigit():
+            contact_id=input("Enter contact id or \"0\" for return  to previous menu: " )
+        contact_id=int(contact_id)
+        if contact_id != 0:
+            try:
+                c=address_book.get_contact_by_id(contact_id)
+                print(c)                
+            except KeyError:
+                print ('Contact with this id didn\'t find')
+    elif command=='f':
+        f=input('enter the name: ')
+        if f != '':
+            search_res=address_book.search_by_name(f)
+            for sr in search_res:
+                print (sr)
+                
+    elif command=='s':
+        address_book.save_to_file()
+        
+    elif command=='r':
+        address_book.report_to_file()
+        
+    elif command=='e':
+        break
+        
+    
+            
+        
+        
+    
 
 
 
@@ -274,6 +361,7 @@ print (c1)
     
 
 #a={1:'A', 2:'B', 3:'C'}
+
 #a.update({2:'T'}) 
 #print(a) 
 #c=a.get(10)
