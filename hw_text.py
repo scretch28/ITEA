@@ -203,109 +203,35 @@ print(su_m)
 #13. Найти абзац, в котором "Data Science" встречается наиболее часто;
 # результат - строка с текстом этого абзаца.¶
 
-
-
-
+d_s=TEXT.split('\n')
+s=''
+m=0
+for d in d_s:
+    h=d.count('Data Science')
+    if h>m:
+        m=h
+        s=d
+print(s,m)    
+    
 #14. Создать dict, в котором¶
 #Ключи - это слово
 #Значения - количество раз упоминания его в тексте
-#
-#
-#
+for x in words:
+    
+    if dict_words.get(x)==None:
+        dict_words[x]=1
+    else:
+        dict_words[x]+=1
+print(dict_words)
+
+
 #15. Найти слова, которые встречаются чаще и реже других.¶
 #Результат записать как
 #tuple(
 #    tuple(самое_редкое_слово, количество), 
-#    tuple(самое_популярное_слово, количество)
-#)
+#    tuple(самое_популярное_слово, количество)dict_words=dict()
 
-
-
-
-
-
-
-
-
-
-
-
-#symbols=[l for l in TEXT if not l.isalpha() and not l.isspace() and not l.isdigit()]
-
-
-symbols_set=set(symbols)
-
-symbols_string=''.join(symbols_set)
-
-symbols_trans = str.maketrans(symbols_string, ' '*len(symbols_string))
-
-# 1. letter count
-print(len(letters))
-
-letters_set=set(letters)
-
-letters_count=list()
-letters_count_dic={}
-
-for s in letters_set:
-    count_s=letters.count(s)
-    letters_count.append(count_s)
-    letters_count_dic.update({s:count_s})
-   
-# 2. unsorted letters list    
-print(letters_count)
-letters_count_sorted=list(letters_count)
-
-# 3. sorted letters list
-letters_count_sorted.sort()
-   
-# words list
-words=TEXT.translate(symbols_trans).split()
-
-# 4. word count
-word_count=len(words)
-print(word_count)
-
-# number list
-number_list=[num for num in words if num.isdigit()]
-
-# 5. number cont
-number_count=len(number_list)
-print(number_count)
-
-words_set=set(words)
-
-words_count_dic={}
-for w in words_set:    
-    count_w=words.count(w)
-    len_w=len(w)
-    print(w,len_w, count_w)
-    current_value=words_count_dic.get(len_w)
-    if(current_value==None):
-        words_count_dic.update({len_w:count_w})
-    else:      
-        words_count_dic.update({len_w:count_w+words_count_dic[len_w]})
-
-# 6 dict key= word length, value=words count
-print(words_count_dic)
-
-
-statement_list=TEXT.split('.')
-
-ds_statement_list=[l for l in statement_list if 'Data Science' in l]
-ds_len=len(ds_statement_list)
-
-ds_part=ds_len/len(statement_list)
-
-# 7 Data Science part in all statements list
-print(ds_part)
-
-symbols_dic={}
-
-for symb in symbols_set:
-    symbols_dic.update({symb:symbols.count(symb)})
-   
-# 8. symbols count dictionary
-print(symbols_dic)
-
-
+max_words=max(dict_words.items(),key=lambda x: x[1])
+min_words=min(dict_words.items(),key=lambda x: x[1])
+a=(max_words, min_words)
+print(a)

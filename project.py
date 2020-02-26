@@ -42,11 +42,17 @@ class Contact:
         self.phones=list()
         self.messengers=dict()
         self.id = 0
+        
+        
+    def convert_to_search_string(self):
+        result=f"{self.name} {self.surname} {self.midle_name} {self.address} {str.join(', ', self.e_mail)} {str.join(', ', self.phones)} {self.messengers}"
+        return result 
     
     def __str__(self):
 #        result='\n'+'name: ' % name, 'surname: ' % surname, 
         result=f"id={self.id} {self.name} {self.surname} {self.midle_name}:\n\tадреса: {self.address} \n\te_mail: {str.join(', ', self.e_mail)} \n\tтелефони: {str.join(', ', self.phones)} \n\tmessengers: {self.messengers}"
-        return result        
+        return result 
+       
             
         
 
@@ -95,9 +101,8 @@ class Address_book:
             contact.messengers[messenger]=account     
             messenger=input('Enter the messenger number or empty str: ')
         
-        
-             
-        
+        print("Створено контакт %s" % contact.name)
+                             
 #        self.contacts[contact.id]=contact
         
         return contact
@@ -111,47 +116,45 @@ class Address_book:
         self.reg_id += 1
         contact.id=self.reg_id
         self.contacts[contact.id]=contact
+        print('Контакт %s додано до адресної книги ' % contact.name)
         
         
         
     def __str__(self):
-          l_max_name=len(max(self.contacts.values(),key=lambda x:len(x.name)).name)
-          l_max_surname=len(max(self.contacts.values(),key=lambda x:len(x.surname)).surname)
-          l_max_midle_name=len(max(self.contacts.values(),key=lambda x:len(x.midle_name)).midle_name)
-          l_max_phone=15
-          l_max_e_mail=20
+        if len(self.contacts)==0:
+            return'Contact list is empty'
+            
+        l_max_name=len(max(self.contacts.values(),key=lambda x:len(x.name)).name)
+        l_max_surname=len(max(self.contacts.values(),key=lambda x:len(x.surname)).surname)
+        l_max_midle_name=len(max(self.contacts.values(),key=lambda x:len(x.midle_name)).midle_name)
+        l_max_phone=15
+        l_max_e_mail=20
           
-                  
+                 
+        result=''
           
-          
-          result=''
-          
-          for c in self.contacts.values():
+        for c in self.contacts.values():
     
-              l_name=l_max_name -len(c.name)
-              l_surname=l_max_surname -len(c.surname)
-              l_midle_name=l_max_midle_name -len(c.midle_name)
-              l_phone=l_max_phone
-              phone=''
-              if len(c.phones)>0:
+            l_name=l_max_name -len(c.name)
+            l_surname=l_max_surname -len(c.surname)
+            l_midle_name=l_max_midle_name -len(c.midle_name)
+            l_phone=l_max_phone
+            phone=''
+            if len(c.phones)>0:
                   phone=c.phones[0]
                   l_phone=l_max_phone-len(phone)
-              e_mail=''
-              if len(c.e_mail)>0:
+            e_mail=''
+            if len(c.e_mail)>0:
                   e_mail=c.e_mail[0]
                   l_e_mail=l_max_e_mail-len(e_mail)
               
-           
-                  
-                  
-              
-              result+='| %s | %s %s | %s %s | %s %s | %s %s | %s %s |\n'%(c.id, c.name, ' '*l_name, c.surname, ' '*l_surname, c.midle_name, ' '*l_midle_name, phone, ' '*l_phone, e_mail, ' '*l_e_mail)
+        result+='| %s | %s %s | %s %s | %s %s | %s %s | %s %s |\n'%(c.id, c.name, ' '*l_name, c.surname, ' '*l_surname, c.midle_name, ' '*l_midle_name, phone, ' '*l_phone, e_mail, ' '*l_e_mail)
         
-          return result
+        return result
       
     def update_contact (self, id):
           contact=self.contacts[id]
-          print('Дані контакту будуть змінені')
+          print('Дані контакту %s будуть змінені' % contact.name)
           
           value=contact.name
           print('Поточні данні контакту: name %s ' % value )
@@ -210,13 +213,14 @@ class Address_book:
 
     def del_contact(self, id):
         contact=self.contacts[id]
-        print('Дані контакту будуть видалені: ', contact)
+        print('Дані контакту %s будуть видалені з адресної книги' % contact.name)
         del self.contacts[id]
        
     def save_to_file(self, file_name="adress_book"):
        
         filehandler = open(file_name, 'bw') 
         pickle.dump(self, filehandler)
+        print('Дані збережено у файл %s' % file_name)
         
         
     def load_from_file (self, file_name="adress_book"):
@@ -224,19 +228,39 @@ class Address_book:
         saved_book = pickle.load(filehandler)
         self.reg_id=saved_book.reg_id
         self.contacts=saved_book.contacts
+        print('З файлу %s завантажено %s записів' % (file_name, len(self.contacts)))
         
     def get_contact_by_id (self, id):
         return self.contacts[id]
     
     def report_to_file (self):
-         filehandler = open('report.txt', 'a') 
-         for c in self.contacts.values():
-             print(c, file=filehandler)
-         filehandler.close()
+        report=''
+        for c in self.contacts.values():
+            report+=(str(c)+'\n')
+        filehandler = open('report.txt', 'w') 
+        print(report, file=filehandler)
+             
+        filehandler.close()
+         
+         
 
     def search_by_name (self, name):
         result_search=list(filter(lambda x: name in x.name, self.contacts.values()))
+        print('Знайдено %s контактів' % len(result_search ))
         return result_search
+       
+    def search_by_surname (self, surname):
+        result_search=list(filter(lambda x: surname in x.surname, self.contacts.values()))
+        print('Знайдено %s контактів' % len(result_search ))
+        return result_search
+    
+    def search_by_all (self, value):
+        
+        result_search=list(filter(lambda x: value in x.convert_to_search_string(), self.contacts.values()))
+        print('Знайдено %s контактів' % len(result_search ))
+        return result_search
+
+
 
 
 #reg_id=0
@@ -279,7 +303,9 @@ while comand!='e':
     print("Press \"d\" to delete contact")
     print("Press \"v\" to view  contact info")
     print("Press \"r\" to create text report")
-    print("Press \"f\" to find a contact")
+    print("Press \"fn\" to find a contact by name")
+    print("Press \"fs\" to find a contact by surname")
+    print("Press \"fa\" to find a contact by all data")
     print("Press \"s\" to save contacts to file")
     print("Press \"e\" to exit")
     command=input('Make your choise: ')
@@ -287,7 +313,11 @@ while comand!='e':
   
     
     if command=='l':
-        address_book.load_from_file()
+        try:        
+            address_book.load_from_file()
+        except FileNotFoundError:
+            print('File address_book not found')
+            
     elif command=='t':
         print(address_book)
     elif command=='c':
@@ -324,10 +354,25 @@ while comand!='e':
                 print(c)                
             except KeyError:
                 print ('Contact with this id didn\'t find')
-    elif command=='f':
-        f=input('enter the name: ')
-        if f != '':
-            search_res=address_book.search_by_name(f)
+    elif command=='fn':
+        fn=input('enter the name: ')
+        if fn != '':
+            search_res=address_book.search_by_name(fn)
+            for sr in search_res:
+                print (sr)
+                
+    elif command=='fs':
+        fs=input('enter the surname: ')
+        if fs != '':
+            search_res=address_book.search_by_surname(fs)
+            for sr in search_res:
+                print (sr)
+                
+                
+    elif command=='fa':
+        fa=input('enter the key of search: ')
+        if fa != '':
+            search_res=address_book.search_by_all(fa)
             for sr in search_res:
                 print (sr)
                 
@@ -339,6 +384,7 @@ while comand!='e':
         
     elif command=='e':
         break
+    input('Press enter to continue')
         
     
             
